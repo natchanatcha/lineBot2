@@ -20,18 +20,22 @@ def callback():
     json_line = request.get_json()
     json_line = json.dumps(json_line)
     decoded = json.loads(json_line)
-    user = decoded['originalDetectIntentRequest']['payload']['data']['replyToken'] #user = decoded["events"][0]['replyToken']
-    userText = decoded['queryResult']['intent']['displayName']                     #userText = decoded["events"][0]['message']['text']                   
-    if (a1 == 'สวัสดี') :
-        print('สวัสดีจ้ะ')
-    elif (a1 == 'สบายดีมั้ย') :
-        print('สบายดี')
+    #user = decoded["events"][0]['replyToken']     
+    user = decoded['originalDetectIntentRequest']['payload']['data']['replyToken']
+    #userText = decoded["events"][0]['message']['text']       
+    userText = decoded['queryResult']['intent']['displayName']                                       
+    if (userText == 'สวัสดี') :
+        serText ('สวัสดีจ้ะ')
+    elif (userText == 'สบายดีมั้ย') :
+        serText('สบายดี')
     else :
-        print('อะไรอะ')
-   return '',200
-    def sendText(user, text):
-    LINE_API = 'https://api.line.me/v2/bot/message/reply'
-    headers = {
+        serText('อะไรอะ')
+   
+    return '',200
+           
+def sendText(user, text):
+  LINE_API = 'https://api.line.me/v2/bot/message/reply'
+  headers = {
     'Content-Type': 'application/json; charset=UTF-8',
     'Authorization': os.environ['Authorization']    # ตั้ง Config vars ใน heroku พร้อมค่า Access token
   }
